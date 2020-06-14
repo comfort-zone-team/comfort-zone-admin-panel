@@ -65,4 +65,98 @@ export default function UpdateGuard() {
       message.success("Driver Updated Successfully!");
     }
   }, [data]);
+  return (
+    <MainLayout>
+      <PageHeader
+        title={`Update Guard`}
+        avatar={{
+          icon: <SafetyOutlined style={{ color: "black" }} />,
+          style: {
+            background: "none",
+          },
+        }}
+        onBack={() => history.goBack()}
+      />
+      <Divider />
+      <Spin spinning={loading} tip="Updating Guard...">
+        {guard && (
+          <React.Fragment>
+            <Form
+              name="update-guard"
+              layout="vertical"
+              onFinish={onFinish}
+              initialValues={{
+                name: guard.name,
+                mobile: guard.mobile,
+                sector: guard.sector,
+                block: guard.block,
+              }}
+            >
+              <Form.Item
+                label="Name"
+                name="name"
+                rules={[{ required: true, message: "Please input name!" }]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label="Mobile Number"
+                name="mobile"
+                rules={[
+                  { required: true, message: "Please input mobile number!" },
+                  {
+                    pattern: /^(\+\d{1,3}[- ]?)?\d{11}$/,
+                    message: "Mobile number is invalid!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Row>
+                <Col sm={12} xs={24}>
+                  <Form.Item
+                    name="sector"
+                    label="Sector"
+                    rules={[
+                      { required: true, message: "Please select sector!" },
+                    ]}
+                  >
+                    <Select placeholder="Please select a sector">
+                      <Option value="1">1</Option>
+                      <Option value="2">2</Option>
+                      <Option value="3">3</Option>
+                      <Option value="4">4</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col sm={12} xs={24}>
+                  <Form.Item
+                    name="block"
+                    label="Block"
+                    rules={[
+                      { required: true, message: "Please select block!" },
+                    ]}
+                  >
+                    <Select placeholder="Please select a sector">
+                      <Option value="A">A</Option>
+                      <Option value="B">B</Option>
+                      <Option value="C">C</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
+            </Form>
+          </React.Fragment>
+        )}
+      </Spin>
+    </MainLayout>
+  );
 }
